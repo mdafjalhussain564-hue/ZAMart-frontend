@@ -372,33 +372,33 @@ const Navbar = () => {
     // =========================================
     useEffect(() => {
 
-    const checkLogin = () => {
-        const token = localStorage.getItem("token");
+        const checkLogin = () => {
+            const token = localStorage.getItem("token");
 
-        setIsLoggedIn(Boolean(token));
+            setIsLoggedIn(Boolean(token));
 
-        if (token) {
-            getCartCount();
-        } else {
-            setCartCount(0);
-        }
-    };
+            if (token) {
+                getCartCount();
+            } else {
+                setCartCount(0);
+            }
+        };
 
-    // Page/Home load hote hi
-    checkLogin();
+        // Page/Home load hote hi
+        checkLogin();
 
-    // Login / Logout
-    window.addEventListener("authChange", checkLogin);
+        // Login / Logout
+        window.addEventListener("authChange", checkLogin);
 
-    // Add / Delete / Order ke baad
-    window.addEventListener("cartUpdated", getCartCount);
+        // Add / Delete / Order ke baad
+        window.addEventListener("cartUpdated", getCartCount);
 
-    return () => {
-        window.removeEventListener("authChange", checkLogin);
-        window.removeEventListener("cartUpdated", getCartCount);
-    };
+        return () => {
+            window.removeEventListener("authChange", checkLogin);
+            window.removeEventListener("cartUpdated", getCartCount);
+        };
 
-}, []);
+    }, []);
     // =========================================
     // LOGOUT
     // =========================================
@@ -428,7 +428,7 @@ const Navbar = () => {
                         href="/"
                         className="text-xl md:text-3xl font-bold text-blue-600"
                     >
-                        
+                        ZAMart
                     </Link>
 
                     {/* ================= DESKTOP MENU ================= */}
