@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-const ProductsPage = () => {
+function ProductsContent() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +27,7 @@ const ProductsPage = () => {
 
         const res = await axios.get(url);
 
-        setProducts(res.data.data);
+        setProducts(res.data.data || []);
       } catch (error) {
         console.log(error);
         setProducts([]);
@@ -127,6 +127,18 @@ const ProductsPage = () => {
 
     </div>
   );
-};
+}
 
-export default ProductsPage;
+export default function ProductsPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="text-center py-20">
+          Loading products...
+        </div>
+      }
+    >
+      <ProductsContent />
+    </Suspense>
+  );
+}
