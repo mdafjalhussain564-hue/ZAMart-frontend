@@ -140,7 +140,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3003/api/getproduct/${id}`)
+      .get(`https://zamart-backend3.onrender.com/api/getproduct/${id}`)
       .then((res) => setProduct(res.data.data))
       .catch((err) => console.log(err));
   }, [id]);
@@ -164,7 +164,7 @@ const ProductDetails = () => {
   // Already login hai
   try {
     await axios.post(
-      "http://localhost:3003/api/cart/add",
+      "https://zamart-backend3.onrender.com/api/cart/add",
       {
         product_id: id,
         quantity: 1,

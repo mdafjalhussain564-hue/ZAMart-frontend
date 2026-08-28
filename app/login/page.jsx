@@ -39,7 +39,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3003/api/login",
+        "https://zamart-backend3.onrender.com/api/login",
         {
           email: email,
           password: password,
@@ -73,7 +73,7 @@ const Login = () => {
           try {
             // Product ko cart me add karo
             await axios.post(
-              "http://localhost:3003/api/cart/add",
+              "https://zamart-backend3.onrender.com/api/cart/add",
               {
                 product_id: pendingProduct,
                 quantity: 1,

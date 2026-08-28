@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 
-const API_URL = "http://localhost:3003";
+const API_URL = "https://zamart-backend3.onrender.com";
 
 export default function OrderDetailsPage() {
   const { id } = useParams();

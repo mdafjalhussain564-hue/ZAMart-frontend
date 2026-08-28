@@ -335,7 +335,7 @@ const Navbar = () => {
             }
 
             const response = await axios.get(
-                "http://localhost:3003/api/cart",
+                "https://zamart-backend3.onrender.com/api/cart",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

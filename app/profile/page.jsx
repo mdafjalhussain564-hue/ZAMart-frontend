@@ -15,7 +15,7 @@ const Profile = () => {
             }
 
             const res = await axios.get(
-                "http://localhost:3003/api/profile",
+                "https://zamart-backend3.onrender.com/api/profile",
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,

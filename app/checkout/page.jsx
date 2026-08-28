@@ -6,7 +6,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
 
-const API_URL = "http://localhost:3003";
+const API_URL = "https://zamart-backend3.onrender.com";
+
+
 
 export default function CheckoutPage() {
   const router = useRouter();

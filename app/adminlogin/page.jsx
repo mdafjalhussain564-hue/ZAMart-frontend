@@ -27,7 +27,7 @@ const AdminLogin = () => {
             setLoading(true);
 
             const res = await axios.post(
-                "http://localhost:3003/api/admin/login",
+                "https://zamart-backend3.onrender.com/api/admin/login",
                 {
                     email,
                     password

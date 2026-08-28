@@ -10,7 +10,7 @@ function ProductCard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3003/api/getproduct")
+      .get("https://zamart-backend3.onrender.com/api/getproduct")
       .then((res) => {
         console.log("Response:", res.data);
         setProducts(res.data.data);
@@ -19,6 +19,8 @@ function ProductCard() {
         console.log("Error:", err);
       });
   }, []);
+
+
 
   return (
     <div className="max-w-7xl mx-auto px-5 py-10">

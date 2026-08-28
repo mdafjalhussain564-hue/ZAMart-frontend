@@ -100,7 +100,7 @@ const Page = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3003/api/register",
+        "https://zamart-backend3.onrender.com/api/register",
         data
       );
 

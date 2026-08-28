@@ -17,10 +17,11 @@ function ProductsContent() {
       try {
         setLoading(true);
 
-        let url = "http://localhost:3003/api/getproduct";
+        let url = "https://zamart-backend3.onrender.com/api/getproduct";
+       
 
         if (category) {
-          url = `http://localhost:3003/api/getproduct/category/${encodeURIComponent(
+          url = `https://zamart-backend3.onrender.com/api/getproduct/category/${encodeURIComponent(
             category
           )}`;
         }
@@ -105,8 +106,8 @@ function ProductsContent() {
                     <span className="text-green-600 text-sm font-semibold">
                       {item.mrp > 0
                         ? Math.round(
-                            ((item.mrp - item.price) / item.mrp) * 100
-                          )
+                          ((item.mrp - item.price) / item.mrp) * 100
+                        )
                         : 0}
                       % OFF
                     </span>
