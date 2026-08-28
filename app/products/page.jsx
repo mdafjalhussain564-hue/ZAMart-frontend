@@ -18,7 +18,7 @@ function ProductsContent() {
         setLoading(true);
 
         let url = "https://zamart-backend3.onrender.com/api/getproduct";
-       
+
 
         if (category) {
           url = `https://zamart-backend3.onrender.com/api/getproduct/category/${encodeURIComponent(
@@ -27,6 +27,8 @@ function ProductsContent() {
         }
 
         const res = await axios.get(url);
+
+        console.log("LIVE API RESPONSE:", res.data);
 
         setProducts(res.data.data || []);
       } catch (error) {
