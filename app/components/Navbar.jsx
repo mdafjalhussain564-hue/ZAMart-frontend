@@ -552,7 +552,7 @@ const Navbar = () => {
                                 <input
                                     type="text"
                                     placeholder="Search products..."
-                                    className="w-full border-2 border-blue-500 rounded-lg p-1  md:py-2 outline-none focus:border-blue-700"
+                                    className="w-full border-2 border-blue-500 rounded-lg ml-2 md:ml-0 p-1 md:p-2   outline-none focus:border-blue-700"
                                 />
 
                                 <button
