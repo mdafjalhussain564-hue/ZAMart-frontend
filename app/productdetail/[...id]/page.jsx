@@ -69,7 +69,7 @@
 //         </div>
 
 //         <div>
-         
+
 //           <h4 className="text-sm text-gray-500">{product.brand}</h4>
 
 //               <h2 className="text-lg font-semibold mt-1 line-clamp-2">
@@ -150,42 +150,42 @@ const ProductDetails = () => {
   }
 
   const addToCart = async () => {
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  // Login nahi hai
-  if (!token) {
-    // Product ID save karo
-    localStorage.setItem("pendingCartProduct", id);
-    // Login page
-    router.push("/login");
-    return;
-  }
+    // Login nahi hai
+    if (!token) {
+      // Product ID save karo
+      localStorage.setItem("pendingCartProduct", id);
+      // Login page
+      router.push("/login");
+      return;
+    }
 
-  // Already login hai
-  try {
-    await axios.post(
-      "https://zamart-backend3.onrender.com/api/cart/add",
-      {
-        product_id: id,
-        quantity: 1,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    // Already login hai
+    try {
+      await axios.post(
+        "https://zamart-backend3.onrender.com/api/cart/add",
+        {
+          product_id: id,
+          quantity: 1,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    window.dispatchEvent(new Event("cartUpdated"));
+      window.dispatchEvent(new Event("cartUpdated"));
 
-    alert("Product added to cart");
-  } catch (error) {
-    console.error(
-      "Add Cart Error:",
-      error.response?.data || error.message
-    );
-  }
-};
+      alert("Product added to cart");
+    } catch (error) {
+      console.error(
+        "Add Cart Error:",
+        error.response?.data || error.message
+      );
+    }
+  };
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
       <div className="grid md:grid-cols-2 gap-10">
@@ -248,7 +248,14 @@ const ProductDetails = () => {
               Add to Cart
             </button>
 
+            {/* <button
+              className="bg-[#ffe51f] w-[50%] text-black font-bold px-6 py-3 rounded-lg"
+            >
+              Buy at ₹{product.price}
+            </button> */}
+
             <button
+              onClick={() => router.push(`/checkout?productId=${product.id}`)}
               className="bg-[#ffe51f] w-[50%] text-black font-bold px-6 py-3 rounded-lg"
             >
               Buy at ₹{product.price}
