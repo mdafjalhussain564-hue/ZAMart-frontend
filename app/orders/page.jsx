@@ -16,6 +16,8 @@ export default function OrdersPage() {
         try {
             const token = localStorage.getItem("token");
 
+            console.log("ADMIN TOKEN:", token);
+
             if (!token) {
                 alert("Please login first");
                 return;
@@ -43,6 +45,8 @@ export default function OrdersPage() {
         }
     };
 
+
+    
     useEffect(() => {
         getOrders();
     }, []);
