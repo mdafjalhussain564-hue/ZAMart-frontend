@@ -18,7 +18,7 @@ export default function OrderDetailsPage() {
       const token = localStorage.getItem("token");
 
       if (!token) {
-       alert("Please login first");
+        alert("Please login first");
         router.push("/login");
         return;
       }
@@ -125,9 +125,21 @@ export default function OrderDetailsPage() {
           <div className="flex flex-col sm:flex-row gap-6 py-7">
 
             <img
-              src={order.image}
-              alt={order.product_name}
+              src={
+                order.image?.startsWith("http")
+                  ? order.image
+                  : order.image?.startsWith("/uploads/")
+                    ? `${API_URL}${order.image}`
+                    : order.image
+                      ? `${API_URL}/uploads/${order.image}`
+                      : "/placeholder.png"
+              }
+              alt={order.product_name || "Product"}
               className="w-40 h-48 object-contain rounded-lg"
+              onError={(e) => {
+                console.log("ORDER IMAGE FAILED:", order.image);
+                e.currentTarget.src = "/placeholder.png";
+              }}
             />
 
             <div className="flex-1">

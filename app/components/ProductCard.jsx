@@ -1,9 +1,9 @@
-"use client"
+
+"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-
 
 function ProductCard() {
   const [products, setProducts] = useState([]);
@@ -12,41 +12,52 @@ function ProductCard() {
     axios
       .get("https://zamart-backend3.onrender.com/api/getproduct")
       .then((res) => {
-        console.log("Response:", res.data);
-        setProducts(res.data.data);
+        console.log("FULL RESPONSE:", res.data);
+        console.log("PRODUCTS:", res.data.data);
+
+        setProducts(res.data.data || []);
       })
       .catch((err) => {
-        console.log("Error:", err);
+        console.error("PRODUCT ERROR:", err);
       });
   }, []);
-
-
 
   return (
     <div className="max-w-7xl mx-auto px-5 py-10">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((item) => (
-          <Link key={item.id} href={`/productdetail/${item.id}`}>
-            <div
-              key={item.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border"
-            >
 
-              <div className="h-56 flex justify-center items-center bg-gray-100 p-4">
+        {products.map((item) => (
+          <Link
+            key={item.id}
+            href={`/productdetail/${item.id}`}
+          >
+
+
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border">
+
+              {/* IMAGE */}
+              <div className="h-64 w-full flex justify-center items-center bg-gray-100 p-4">
                 <img
                   src={
-                    item.image?.startsWith("/uploads/")
-                      ? `https://zamart-backend3.onrender.com${item.image}`
-                      : item.image || "/placeholder.png"
+                    item.image?.startsWith("http")
+                      ? item.image
+                      : item.image?.startsWith("/uploads/")
+                        ? `https://zamart-backend3.onrender.com${item.image}`
+                        : "/placeholder.png"
                   }
-                  alt={item.product_name}
-                  className="h-full object-contain hover:scale-105 transition duration-300"
+                  alt={item.product_name || "Product"}
+                  className="w-full h-full  object-contain hover:scale-105 transition duration-300"
+                  onError={(e) => {
+                    e.currentTarget.src = "/placeholder.png";
+                  }}
                 />
+
               </div>
-
-
+              {/* DETAILS */}
               <div className="p-4">
-                <h4 className="text-sm text-gray-500">{item.brand}</h4>
+                <h4 className="text-sm text-gray-500">
+                  {item.brand}
+                </h4>
 
                 <h2 className="text-lg font-semibold mt-1 line-clamp-2">
                   {item.product_name}
@@ -67,29 +78,31 @@ function ProductCard() {
                     ₹{item.mrp}
                   </span>
 
-                  <span className="text-green-600 text-sm font-semibold">
-                    {Math.round(
-                      ((item.mrp - item.price) / item.mrp) * 100
-                    )}
-                    % OFF
-                  </span>
+                  {item.mrp && item.price && (
+                    <span className="text-green-600 text-sm font-semibold">
+                      {Math.round(
+                        ((item.mrp - item.price) / item.mrp) * 100
+                      )}
+                      % OFF
+                    </span>
+                  )}
                 </div>
 
                 <p className="text-gray-600 text-sm mt-3 line-clamp-3">
                   {item.description}
                 </p>
-
-                {/* <button className="w-full mt-5 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition">
-            Add to Cart
-          </button> */}
               </div>
+
             </div>
+
+
+
           </Link>
         ))}
+
       </div>
     </div>
   );
 }
 
 export default ProductCard;
-
