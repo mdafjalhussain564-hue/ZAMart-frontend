@@ -193,7 +193,11 @@ const ProductDetails = () => {
         {/* Image */}
         <div>
           <img
-            src={product.image}
+            src={
+              product.image?.startsWith("/uploads/")
+                ? `https://zamart-backend3.onrender.com${product.image}`
+                : product.image || "/placeholder.png"
+            }
             alt={product.product_name}
             className="w-full h-[30rem] object-contain rounded-lg shadow-lg"
           />
@@ -254,7 +258,9 @@ const ProductDetails = () => {
               Buy at ₹{product.price}
             </button> */}
 
+
             <button
+              type="button"
               onClick={() => router.push(`/checkout?productId=${product.id}`)}
               className="bg-[#ffe51f] w-[50%] text-black font-bold px-6 py-3 rounded-lg"
             >

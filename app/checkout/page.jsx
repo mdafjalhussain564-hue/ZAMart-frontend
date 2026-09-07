@@ -116,62 +116,7 @@ export default function CheckoutPage() {
 
   // ================= PLACE ORDER =================
 
-  // const placeOrder = async () => {
-  //   try {
-  //     const token = localStorage.getItem("token");
 
-  //     if (!token) {
-  //       alert("Please login first");
-  //       router.push("/login");
-  //       return;
-  //     }
-
-  //     if (cart.length === 0) {
-  //       alert("Your cart is empty");
-  //       return;
-  //     }
-
-  //     if (!selectedAddressId) {
-  //       alert("Please select a delivery address");
-  //       return;
-  //     }
-
-  //     setPlacingOrder(true);
-
-  //     const response = await axios.post(
-  //       `${API_URL}/api/orders/create`,
-  //       {
-  //         addressId: selectedAddressId,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-
-  //     console.log("ORDER RESPONSE:", response.data);
-
-  //     window.dispatchEvent(new Event("cartUpdated"));
-
-  //     alert("Order placed successfully!");
-
-  //     router.push("/orders");
-
-  //   } catch (error) {
-  //     console.error(
-  //       "Place Order Error:",
-  //       error.response?.data || error.message
-  //     );
-
-  //     alert(
-  //       error.response?.data?.message ||
-  //       "Order placement failed"
-  //     );
-  //   } finally {
-  //     setPlacingOrder(false);
-  //   }
-  // };
 
   const placeOrder = async () => {
     try {
@@ -307,7 +252,7 @@ export default function CheckoutPage() {
   //             );
   //           }
 
-            
+
 
   //         } catch (error) {
   //           console.error(
@@ -320,7 +265,7 @@ export default function CheckoutPage() {
   //         }
   //       },
 
-      
+
   //       prefill: {
   //         name: "Afjal",
   //         email: "afjal@gmail.com",
@@ -359,309 +304,309 @@ export default function CheckoutPage() {
 
 
   const payNow = async () => {
-  try {
-    const token = localStorage.getItem("token");
+    try {
+      const token = localStorage.getItem("token");
 
-    // ================= LOGIN CHECK =================
-    if (!token) {
-      alert("Please login first");
-      router.push("/login");
-      return;
-    }
+      // ================= LOGIN CHECK =================
+      if (!token) {
+        alert("Please login first");
+        router.push("/login");
+        return;
+      }
 
-    // ================= CART CHECK =================
-    if (cart.length === 0) {
-      alert("Your cart is empty");
-      return;
-    }
+      // ================= CART CHECK =================
+      if (cart.length === 0) {
+        alert("Your cart is empty");
+        return;
+      }
 
-    // ================= ADDRESS CHECK =================
-    if (!selectedAddressId) {
-      alert("Please select a delivery address");
-      return;
-    }
+      // ================= ADDRESS CHECK =================
+      if (!selectedAddressId) {
+        alert("Please select a delivery address");
+        return;
+      }
 
-    setPlacingOrder(true);
+      setPlacingOrder(true);
 
-    // =================================================
-    // STEP 1: CREATE MYSQL ORDER
-    // =================================================
+      // =================================================
+      // STEP 1: CREATE MYSQL ORDER
+      // =================================================
 
-    const orderResponse = await axios.post(
-      `${API_URL}/api/orders/create`,
-      {
-        addressId: selectedAddressId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const orderResponse = await axios.post(
+        `${API_URL}/api/orders/create`,
+        {
+          addressId: selectedAddressId,
         },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(
+        "MYSQL ORDER RESPONSE:",
+        orderResponse.data
+      );
+
+      const mysqlOrderId = orderResponse.data.order_id;
+      const mysqlTotalAmount = orderResponse.data.total_amount;
+
+      console.log(
+        "MYSQL ORDER ID:",
+        mysqlOrderId
+      );
+
+      console.log(
+        "MYSQL TOTAL AMOUNT:",
+        mysqlTotalAmount
+      );
+
+      if (!mysqlOrderId) {
+        alert("MySQL Order ID not received");
+        setPlacingOrder(false);
+        return;
       }
-    );
-
-    console.log(
-      "MYSQL ORDER RESPONSE:",
-      orderResponse.data
-    );
-
-    const mysqlOrderId = orderResponse.data.order_id;
-    const mysqlTotalAmount = orderResponse.data.total_amount;
-
-    console.log(
-      "MYSQL ORDER ID:",
-      mysqlOrderId
-    );
-
-    console.log(
-      "MYSQL TOTAL AMOUNT:",
-      mysqlTotalAmount
-    );
-
-    if (!mysqlOrderId) {
-      alert("MySQL Order ID not received");
-      setPlacingOrder(false);
-      return;
-    }
-
-    // =================================================
-    // STEP 2: CREATE RAZORPAY ORDER
-    // =================================================
-
-    const response = await axios.post(
-      `${API_URL}/api/payment/create-order`,
-      {
-        amount: mysqlTotalAmount,
-      }
-    );
-
-    const { order, key } = response.data;
-
-    console.log(
-      "RAZORPAY KEY:",
-      key
-    );
-
-    console.log(
-      "RAZORPAY ORDER:",
-      order
-    );
-
-    if (!order || !order.id) {
-      alert("Razorpay order creation failed");
-      setPlacingOrder(false);
-      return;
-    }
-
-    // =================================================
-    // STEP 3: RAZORPAY OPTIONS
-    // =================================================
-
-    const options = {
-      key: key,
-
-      amount: order.amount,
-
-      currency: order.currency,
-
-      name: "Gmart",
-
-      description: "Order Payment",
-
-      order_id: order.id,
 
       // =================================================
-      // STEP 4: PAYMENT SUCCESS HANDLER
+      // STEP 2: CREATE RAZORPAY ORDER
       // =================================================
 
-      handler: async function (paymentResponse) {
+      const response = await axios.post(
+        `${API_URL}/api/payment/create-order`,
+        {
+          amount: mysqlTotalAmount,
+        }
+      );
 
-        console.log(
-          "========== RAZORPAY PAYMENT RESPONSE =========="
-        );
+      const { order, key } = response.data;
 
-        console.log(
-          "RAZORPAY ORDER ID:",
-          paymentResponse.razorpay_order_id
-        );
+      console.log(
+        "RAZORPAY KEY:",
+        key
+      );
 
-        console.log(
-          "RAZORPAY PAYMENT ID:",
-          paymentResponse.razorpay_payment_id
-        );
+      console.log(
+        "RAZORPAY ORDER:",
+        order
+      );
 
-        console.log(
-          "RAZORPAY SIGNATURE:",
-          paymentResponse.razorpay_signature
-        );
+      if (!order || !order.id) {
+        alert("Razorpay order creation failed");
+        setPlacingOrder(false);
+        return;
+      }
 
-        console.log(
-          "MYSQL ORDER ID:",
-          mysqlOrderId
-        );
+      // =================================================
+      // STEP 3: RAZORPAY OPTIONS
+      // =================================================
 
-        console.log(
-          "==============================================="
-        );
+      const options = {
+        key: key,
 
-        try {
+        amount: order.amount,
 
-          // =================================================
-          // STEP 5: VERIFY PAYMENT
-          // =================================================
+        currency: order.currency,
 
-          const verifyData = {
-            // MySQL orders.id
-            order_id: mysqlOrderId,
+        name: "Gmart",
 
-            // Razorpay order id
-            razorpay_order_id:
-              paymentResponse.razorpay_order_id,
+        description: "Order Payment",
 
-            // Razorpay payment id
-            razorpay_payment_id:
-              paymentResponse.razorpay_payment_id,
+        order_id: order.id,
 
-            // Razorpay signature
-            razorpay_signature:
-              paymentResponse.razorpay_signature,
-          };
+        // =================================================
+        // STEP 4: PAYMENT SUCCESS HANDLER
+        // =================================================
+
+        handler: async function (paymentResponse) {
 
           console.log(
-            "========== VERIFY SENDING =========="
+            "========== RAZORPAY PAYMENT RESPONSE =========="
           );
 
           console.log(
-            "VERIFY DATA:",
-            verifyData
+            "RAZORPAY ORDER ID:",
+            paymentResponse.razorpay_order_id
           );
 
           console.log(
-            "===================================="
-          );
-
-          const verifyResponse = await axios.post(
-            `${API_URL}/api/payment/verify`,
-            verifyData
+            "RAZORPAY PAYMENT ID:",
+            paymentResponse.razorpay_payment_id
           );
 
           console.log(
-            "VERIFY RESPONSE:",
-            verifyResponse.data
+            "RAZORPAY SIGNATURE:",
+            paymentResponse.razorpay_signature
           );
 
-          // =================================================
-          // STEP 6: PAYMENT VERIFIED
-          // =================================================
+          console.log(
+            "MYSQL ORDER ID:",
+            mysqlOrderId
+          );
 
-          if (verifyResponse.data.success) {
+          console.log(
+            "==============================================="
+          );
+
+          try {
+
+            // =================================================
+            // STEP 5: VERIFY PAYMENT
+            // =================================================
+
+            const verifyData = {
+              // MySQL orders.id
+              order_id: mysqlOrderId,
+
+              // Razorpay order id
+              razorpay_order_id:
+                paymentResponse.razorpay_order_id,
+
+              // Razorpay payment id
+              razorpay_payment_id:
+                paymentResponse.razorpay_payment_id,
+
+              // Razorpay signature
+              razorpay_signature:
+                paymentResponse.razorpay_signature,
+            };
 
             console.log(
-              "PAYMENT VERIFIED SUCCESSFULLY"
+              "========== VERIFY SENDING =========="
             );
 
-            // Payment success page
-            router.push(
-              `/payment-success?orderId=${mysqlOrderId}&paymentId=${paymentResponse.razorpay_payment_id}&amount=${mysqlTotalAmount}`
+            console.log(
+              "VERIFY DATA:",
+              verifyData
             );
 
-          } else {
+            console.log(
+              "===================================="
+            );
+
+            const verifyResponse = await axios.post(
+              `${API_URL}/api/payment/verify`,
+              verifyData
+            );
+
+            console.log(
+              "VERIFY RESPONSE:",
+              verifyResponse.data
+            );
+
+            // =================================================
+            // STEP 6: PAYMENT VERIFIED
+            // =================================================
+
+            if (verifyResponse.data.success) {
+
+              console.log(
+                "PAYMENT VERIFIED SUCCESSFULLY"
+              );
+
+              // Payment success page
+              router.push(
+                `/payment-success?orderId=${mysqlOrderId}&paymentId=${paymentResponse.razorpay_payment_id}&amount=${mysqlTotalAmount}`
+              );
+
+            } else {
+
+              alert(
+                verifyResponse.data.message ||
+                "Payment verification failed"
+              );
+
+              setPlacingOrder(false);
+            }
+
+          } catch (error) {
+
+            console.error(
+              "VERIFY ERROR DATA:",
+              JSON.stringify(
+                error.response?.data,
+                null,
+                2
+              )
+            );
+
+            console.error(
+              "VERIFY ERROR STATUS:",
+              error.response?.status
+            );
+
+            console.error(
+              "VERIFY ERROR MESSAGE:",
+              error.message
+            );
 
             alert(
-              verifyResponse.data.message ||
+              error.response?.data?.message ||
               "Payment verification failed"
             );
 
             setPlacingOrder(false);
           }
+        },
 
-        } catch (error) {
+        // =================================================
+        // STEP 7: PREFILL
+        // =================================================
 
-          console.error(
-            "VERIFY ERROR DATA:",
-            JSON.stringify(
-              error.response?.data,
-              null,
-              2
-            )
-          );
+        prefill: {
+          name: "Afjal",
+          email: "afjal@gmail.com",
+          contact: "9876543210",
+        },
 
-          console.error(
-            "VERIFY ERROR STATUS:",
-            error.response?.status
-          );
+        // =================================================
+        // STEP 8: THEME
+        // =================================================
 
-          console.error(
-            "VERIFY ERROR MESSAGE:",
-            error.message
-          );
-
-          alert(
-            error.response?.data?.message ||
-            "Payment verification failed"
-          );
-
-          setPlacingOrder(false);
-        }
-      },
+        theme: {
+          color: "#000000",
+        },
+      };
 
       // =================================================
-      // STEP 7: PREFILL
+      // STEP 9: RAZORPAY SDK CHECK
       // =================================================
 
-      prefill: {
-        name: "Afjal",
-        email: "afjal@gmail.com",
-        contact: "9876543210",
-      },
+      if (!window.Razorpay) {
+
+        alert(
+          "Razorpay SDK is not loaded. Please refresh the page."
+        );
+
+        setPlacingOrder(false);
+
+        return;
+      }
 
       // =================================================
-      // STEP 8: THEME
+      // STEP 10: OPEN RAZORPAY
       // =================================================
 
-      theme: {
-        color: "#000000",
-      },
-    };
+      const razorpay =
+        new window.Razorpay(options);
 
-    // =================================================
-    // STEP 9: RAZORPAY SDK CHECK
-    // =================================================
+      razorpay.open();
 
-    if (!window.Razorpay) {
+    } catch (error) {
+
+      console.error(
+        "PAYMENT ERROR:",
+        error.response?.data || error.message
+      );
 
       alert(
-        "Razorpay SDK is not loaded. Please refresh the page."
+        error.response?.data?.message ||
+        "Payment initialization failed"
       );
 
       setPlacingOrder(false);
-
-      return;
     }
-
-    // =================================================
-    // STEP 10: OPEN RAZORPAY
-    // =================================================
-
-    const razorpay =
-      new window.Razorpay(options);
-
-    razorpay.open();
-
-  } catch (error) {
-
-    console.error(
-      "PAYMENT ERROR:",
-      error.response?.data || error.message
-    );
-
-    alert(
-      error.response?.data?.message ||
-      "Payment initialization failed"
-    );
-
-    setPlacingOrder(false);
-  }
-};
+  };
 
 
 
@@ -856,7 +801,11 @@ export default function CheckoutPage() {
                       >
 
                         <img
-                          src={item.image}
+                          src={
+                            item.image?.startsWith("/uploads/")
+                              ? `https://zamart-backend3.onrender.com${item.image}`
+                              : item.image || "/placeholder.png"
+                          }
                           alt={item.product_name}
                           className="w-28 h-32 object-contain rounded-lg"
                         />

@@ -92,7 +92,7 @@ export default function CartPage() {
             window.dispatchEvent(
                 new Event("cartUpdated")
             );
-            
+
         } catch (error) {
             console.error(
                 "Remove Cart Error:",
@@ -146,7 +146,11 @@ export default function CartPage() {
 
                                     {/* Image */}
                                     <img
-                                        src={item.image}
+                                        src={
+                                            item.image?.startsWith("/uploads/")
+                                                ? `${API_URL}${item.image}`
+                                                : item.image || "/placeholder.png"
+                                        }
                                         alt={item.product_name}
                                         className="w-40 h-48 object-contain rounded-lg"
                                     />
