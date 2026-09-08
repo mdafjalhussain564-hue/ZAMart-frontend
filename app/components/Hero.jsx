@@ -23,7 +23,7 @@ const images = [
   },
   {
     image: "/image/image3.png",
-    productId: 28,
+    productId: 14,
   },
   {
     image: "/image/image4.png",
