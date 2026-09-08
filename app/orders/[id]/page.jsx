@@ -125,15 +125,7 @@ export default function OrderDetailsPage() {
           <div className="flex flex-col sm:flex-row gap-6 py-7">
 
             <img
-              src={
-                order.image?.startsWith("http")
-                  ? order.image
-                  : order.image?.startsWith("/uploads/")
-                    ? `${API_URL}${order.image}`
-                    : order.image
-                      ? `${API_URL}/uploads/${order.image}`
-                      : "/placeholder.png"
-              }
+              src={order.image || "/placeholder.png"}
               alt={order.product_name || "Product"}
               className="w-40 h-48 object-contain rounded-lg"
               onError={(e) => {

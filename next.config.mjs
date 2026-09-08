@@ -1,4 +1,25 @@
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   reactCompiler: true,
+
+//   images: {
+//     remotePatterns: [
+//       {
+//         protocol: "https",
+//         hostname: "rukminim1.flixcart.com",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "rukminim2.flixcart.com",
+//       },
+//     ],
+//   },
+// };
+
+// export default nextConfig;
+
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   reactCompiler: true,
 
@@ -12,11 +33,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "rukminim2.flixcart.com",
       },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
     ],
   },
 };
 
 export default nextConfig;
-
 
 

@@ -69,11 +69,7 @@ const ProductDetails = () => {
         {/* Image */}
         <div>
           <img
-            src={
-              product.image?.startsWith("/uploads/")
-                ? `https://zamart-backend3.onrender.com${product.image}`
-                : product.image || "/placeholder.png"
-            }
+            src={product.image || "/placeholder.png"}
             alt={product.product_name}
             className="w-full h-[30rem] object-contain rounded-lg shadow-lg"
           />

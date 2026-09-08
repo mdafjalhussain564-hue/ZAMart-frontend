@@ -146,15 +146,10 @@ export default function CartPage() {
 
                                     {/* Image */}
                                     <img
-                                        src={
-                                            item.image?.startsWith("/uploads/")
-                                                ? `${API_URL}${item.image}`
-                                                : item.image || "/placeholder.png"
-                                        }
-                                        alt={item.product_name}
+                                        src={item.image || "/placeholder.png"}
+                                        alt={item.product_name || "Product"}
                                         className="w-40 h-48 object-contain rounded-lg"
                                     />
-
                                     {/* Product Info */}
                                     <div className="flex-1">
 

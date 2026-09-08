@@ -73,14 +73,8 @@ function ProductsContent() {
 
                 <div className="h-56 flex justify-center items-center bg-gray-100 p-4">
                   <img
-                    src={
-                      item.image?.startsWith("http")
-                        ? item.image
-                        : item.image?.startsWith("/uploads/")
-                          ? `https://zamart-backend3.onrender.com${item.image}`
-                          : "/placeholder.png"
-                    }
-                    alt={item.product_name}
+                    src={item.image || "/placeholder.png"}
+                    alt={item.product_name || "Product"}
                     className="h-full w-full object-contain hover:scale-105 transition"
                     onError={(e) => {
                       e.currentTarget.src = "/placeholder.png";

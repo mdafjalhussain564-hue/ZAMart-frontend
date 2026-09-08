@@ -36,39 +36,13 @@ function ProductCard() {
             <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden border">
 
               {/* IMAGE */}
+              {/* IMAGE */}
               <div className="h-64 w-full flex justify-center items-center bg-gray-100 p-4">
-                {/* <img
-                  src={
-                    item.image?.startsWith("http")
-                      ? item.image
-                      : item.image?.startsWith("/uploads/")
-                        ? `https://zamart-backend3.onrender.com${item.image}`
-                        : "/placeholder.png"
-                  }
-                  alt={item.product_name || "Product"}
-                  className="w-full h-full  object-contain hover:scale-105 transition duration-300"
-                  onError={(e) => {
-                    e.currentTarget.src = "/placeholder.png";
-                  }}
-                /> */}
-
 
                 <img
-                  src={
-                    item.image?.startsWith("http")
-                      ? item.image
-                      : item.image?.startsWith("/uploads/")
-                        ? `https://zamart-backend3.onrender.com${item.image}`
-                        : item.image
-                          ? `https://zamart-backend3.onrender.com/uploads/${item.image}`
-                          : "/placeholder.png"
-                  }
+                  src={item.image}
                   alt={item.product_name || "Product"}
                   className="w-full h-full object-contain hover:scale-105 transition duration-300"
-                  onError={(e) => {
-                    console.log("IMAGE FAILED:", e.currentTarget.src);
-                    e.currentTarget.src = "/placeholder.png";
-                  }}
                 />
 
               </div>

@@ -801,15 +801,10 @@ export default function CheckoutPage() {
                       >
 
                         <img
-                          src={
-                            item.image?.startsWith("/uploads/")
-                              ? `https://zamart-backend3.onrender.com${item.image}`
-                              : item.image || "/placeholder.png"
-                          }
-                          alt={item.product_name}
+                          src={item.image || "/placeholder.png"}
+                          alt={item.product_name || "Product"}
                           className="w-28 h-32 object-contain rounded-lg"
                         />
-
                         <div className="flex-1">
 
                           <h3 className="text-lg font-semibold">

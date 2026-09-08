@@ -192,15 +192,10 @@ export default function OrdersPage() {
                                 <div className="flex gap-5 py-5">
 
                                     <img
-                                        src={
-                                            order.image?.startsWith("/uploads/")
-                                                ? `https://zamart-backend3.onrender.com${order.image}`
-                                                : order.image || "/placeholder.png"
-                                        }
+                                        src={order.image || "/placeholder.png"}
                                         alt={order.product_name}
                                         className="w-28 h-32 object-contain rounded-lg"
                                     />
-
                                     <div>
                                         <h3 className="text-lg font-semibold">
                                             {order.product_name}
@@ -290,23 +285,8 @@ export default function OrdersPage() {
                         {/* Product */}
                         <div className="flex gap-3 mb-5">
 
-                            {/* <img
-                                src={selectedOrder.image}
-                                alt={selectedOrder.product_name}
-                                className="w-16 h-16 object-contain border rounded"
-                            /> */}
-
-
                             <img
-                                src={
-                                    selectedOrder.image?.startsWith("http")
-                                        ? selectedOrder.image
-                                        : selectedOrder.image?.startsWith("/uploads/")
-                                            ? `https://zamart-backend3.onrender.com${selectedOrder.image}`
-                                            : selectedOrder.image
-                                                ? `https://zamart-backend3.onrender.com/uploads/${selectedOrder.image}`
-                                                : "/placeholder.png"
-                                }
+                                src={selectedOrder.image || "/placeholder.png"}
                                 alt={selectedOrder.product_name || "Product"}
                                 className="w-16 h-16 object-contain border rounded"
                                 onError={(e) => {
