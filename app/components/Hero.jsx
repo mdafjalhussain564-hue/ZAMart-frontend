@@ -15,39 +15,39 @@ import "swiper/css/pagination";
 const images = [
   {
     image: "/image/image1.png",
-    productId: 26,
-  },
-  {
-    image: "/image/image2.png",
-    productId: 27,
-  },
-  {
-    image: "/image/image3.png",
-    productId: 14,
-  },
-  {
-    image: "/image/image4.png",
-    productId: 29,
-  },
-  {
-    image: "/image/image5.png",
     productId: 30,
   },
   {
-    image: "/image/image6.png",
+    image: "/image/image2.png",
     productId: 31,
   },
   {
-    image: "/image/image7.png",
+    image: "/image/image3.png",
     productId: 32,
   },
   {
-    image: "/image/image8.png",
+    image: "/image/image4.png",
     productId: 33,
   },
   {
-    image: "/image/image9.png",
+    image: "/image/image5.png",
     productId: 34,
+  },
+  {
+    image: "/image/image6.png",
+    productId: 36,
+  },
+  {
+    image: "/image/image7.png",
+    productId: 37,
+  },
+  {
+    image: "/image/image8.png",
+    productId: 38,
+  },
+  {
+    image: "/image/image9.png",
+    productId: 39,
   },
 ];
 
